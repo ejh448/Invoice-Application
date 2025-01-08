@@ -27,8 +27,64 @@ class MyTabView(customtkinter.CTkTabview):
         self.load_company_data()
 
     def initialize_main_tab(self):
-        self.label = customtkinter.CTkLabel(master=self.tab("Main"), text="This is tab 1")
+        self.label = customtkinter.CTkLabel(master=self.tab("Main"), text="Invoice")
         self.label.grid(row=0, column=0, padx=20, pady=10, sticky="nsew")
+
+        self.company_name_label = customtkinter.CTkLabel(master=self.tab("Main"), text="Company Label")
+        self.company_name_label.grid(row=1, column=0, padx=20, pady=10, sticky="nsew")
+
+        self.first_name_label = customtkinter.CTkLabel(master=self.tab("Main"), text="First")
+        self.first_name_label.grid(row=2, column=0, padx=20, pady=10, sticky="nsew")
+
+        self.last_name_label = customtkinter.CTkLabel(master=self.tab("Main"), text="last")
+        self.last_name_label.grid(row=2, column=1, padx=20, pady=10, sticky="nsew")
+
+        self.phone_number_label = customtkinter.CTkLabel(master=self.tab("Main"), text="(111)111-1111")
+        self.phone_number_label.grid(row=3, column=0, padx=20, pady=10, sticky="nsew")
+        
+        self.address_label = customtkinter.CTkLabel(master=self.tab("Main"), text="address")
+        self.address_label.grid(row=4, column=0, padx=20, pady=10, sticky="nsew")
+
+        self.zipcode_label = customtkinter.CTkLabel(master=self.tab("Main"), text="zipcode")
+        self.zipcode_label.grid(row=4, column=1, padx=20, pady=10, sticky="nsew")
+
+        self.state_label = customtkinter.CTkLabel(master=self.tab("Main"), text="State")
+        self.state_label.grid(row=4, column=2, padx=20, pady=10, sticky="nsew")
+
+        self.invoice_number_label = customtkinter.CTkLabel(master=self.tab("Main"), text="Invoice number")
+        self.invoice_number_label.grid(row=3, column=4, padx=20, pady=10, sticky="nsew")
+
+        self.invoice_date_label = customtkinter.CTkLabel(master=self.tab("Main"), text="Invoice Date")
+        self.invoice_date_label.grid(row=4, column=4, padx=20, pady=10, sticky="nsew")
+        
+        self.invoice_number_entry = customtkinter.CTkEntry(master=self.tab("Main"), placeholder_text="invoice number")
+        self.invoice_number_entry.grid(row=3, column=5, padx=20, pady=10, sticky="nsew")
+
+        self.invoice_date_entry = customtkinter.CTkEntry(master=self.tab("Main"), placeholder_text="Date")
+        self.invoice_date_entry.grid(row=4, column=5, padx=20, pady=10, sticky="nsew")
+
+        self.invoice_due_date_entry = customtkinter.CTkEntry(master=self.tab("Main"), placeholder_text="Due Date")
+        self.invoice_due_date_entry.grid(row=5, column=5, padx=20, pady=10, sticky="nsew")
+
+        self.invoice_due_date_label = customtkinter.CTkLabel(master=self.tab("Main"), text="Due Date")
+        self.invoice_due_date_label.grid(row=5, column=4, padx=20, pady=10, sticky="nsew")
+
+
+
+
+        self.customer_name_entry = customtkinter.CTkEntry(master=self.tab("Main"), placeholder_text="Customer Name")
+        self.customer_name_entry.grid(row=5, column=0, padx=20, pady=10, sticky="nsew")
+
+        self.customer_address_entry = customtkinter.CTkEntry(master=self.tab("Main"), placeholder_text="Customer Address")
+        self.customer_address_entry.grid(row=6, column=0, padx=20, pady=10, sticky="nsew")
+
+        self.customer_zipcode_entry = customtkinter.CTkEntry(master=self.tab("Main"), placeholder_text="Customer Zipcode")
+        self.customer_zipcode_entry.grid(row=6, column=1, padx=20, pady=10, sticky="nsew")
+
+        self.customer_state_entry = customtkinter.CTkEntry(master=self.tab("Main"), placeholder_text="Customer State")
+        self.customer_state_entry.grid(row=6, column=2, padx=20, pady=10, sticky="nsew")
+
+
 
     def initialize_settings_tab(self):
         self.settings_label = customtkinter.CTkLabel(master=self.tab("Settings"), text="This is the Settings")
@@ -115,7 +171,7 @@ class MyTabView(customtkinter.CTkTabview):
 class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
-        self.geometry("750x750")
+        self.geometry("1280x720")
 
         # Configure grid to allow expansion
         self.grid_rowconfigure(0, weight=1)
