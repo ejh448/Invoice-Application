@@ -9,7 +9,6 @@ customtkinter.set_default_color_theme("dark-blue")
 
 class MyTabView(customtkinter.CTkTabview):
     DATA_FILE = "company_data.json"
-
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
 
