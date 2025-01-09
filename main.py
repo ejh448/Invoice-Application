@@ -111,6 +111,10 @@ class MyTabView(customtkinter.CTkTabview):
         self.add_row_button = customtkinter.CTkButton(master=self.scroll_frame, text="+", width=50, command=self.add_new_row)
         self.add_row_button.grid(row=0, column=3, padx=20, pady=10, sticky="nsew")
 
+        self.create_invoice_button = customtkinter.CTkButton(master=self.tab("Main"), text="Create Invoice", width=50, command="")
+        self.create_invoice_button.grid(row=6, column=4, padx=20, pady=10, sticky="nsew")
+
+
         # Track current row index for entries
         self.current_row_index = 1
 
