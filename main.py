@@ -32,7 +32,6 @@ class MyTabView(customtkinter.CTkTabview):
         self.label.grid(row=0, column=0, padx=20, pady=10, sticky="nsew")
 
         # May need to remove later
-        #self.tab("Main").grid_columnconfigure(0, weight=1)
         self.entry_frame = customtkinter.CTkFrame(self.tab("Main"), fg_color="gray")
         self.entry_frame.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="nsew")
         self.company_name_label = customtkinter.CTkLabel(master=self.entry_frame, text="Company Label")
@@ -111,7 +110,7 @@ class MyTabView(customtkinter.CTkTabview):
         self.add_row_button = customtkinter.CTkButton(master=self.scroll_frame, text="+", width=50, command=self.add_new_row)
         self.add_row_button.grid(row=0, column=3, padx=20, pady=10, sticky="nsew")
 
-        self.create_invoice_button = customtkinter.CTkButton(master=self.entry_frame, text="Create Invoice", width=50, command="")
+        self.create_invoice_button = customtkinter.CTkButton(master=self.entry_frame, text="Create Invoice", width=50, command=self.create_invoice)
         self.create_invoice_button.grid(row=6, column=5, padx=20, pady=10, sticky="nsew")
 
 
@@ -135,6 +134,7 @@ class MyTabView(customtkinter.CTkTabview):
         # This is where customer information will be pulled from the main screen
         # Add the ability to name the file?
         # Figure out how to handle file names
+        # also have a popup for file name
         pass
 
 
@@ -220,8 +220,7 @@ class MyTabView(customtkinter.CTkTabview):
             self.image_path = data.get("image_path", None)
 
 
-            #maintab
-            # Populate Settings tab entries
+            # maintab
             self.company_name_label.configure(text=data.get("company_name", "Company Label"))
             self.first_name_label.configure(text=data.get("first_name", "First"))
             self.last_name_label.configure(text=data.get("last_name", "Last"))

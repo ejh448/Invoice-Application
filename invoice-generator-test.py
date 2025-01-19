@@ -21,6 +21,23 @@ c.drawString(250, 750, "336-902-8899")
 c.drawString(250, 725, "integrityroofing.com")
 c.line(50, 710, 500, 710)
 
+c.drawString(300, 800, "Item")
+c.drawString(300, 775, "Description")
+c.drawString(300, 750, "Price")
+c.drawString(300, 725, "$")
+
+# put a for loop here
+c.drawString(300, 800, "Description")
+c.drawString(300, 800, "Description")
+c.drawString(300, 800, "Description")
+c.drawString(300, 800, "Description")
+
+c.line(50, 710, 500, 710)
+c.drawString(300, 800, "Total: ")
+c.drawString(300, 800, "Date: ")
+c.drawString(300, 800, "Due Date: ")
+
+
 c.save()
 
 print(f"PDF saved successfully at: {pdf_path}")
