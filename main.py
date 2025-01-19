@@ -33,68 +33,69 @@ class MyTabView(customtkinter.CTkTabview):
 
         # May need to remove later
         #self.tab("Main").grid_columnconfigure(0, weight=1)
-
-        self.company_name_label = customtkinter.CTkLabel(master=self.tab("Main"), text="Company Label")
+        self.entry_frame = customtkinter.CTkFrame(self.tab("Main"), fg_color="gray")
+        self.entry_frame.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="nsew")
+        self.company_name_label = customtkinter.CTkLabel(master=self.entry_frame, text="Company Label")
         self.company_name_label.grid(row=1, column=0, padx=20, pady=10, sticky="nsew")
 
-        self.first_name_label = customtkinter.CTkLabel(master=self.tab("Main"), text="First")
+        self.first_name_label = customtkinter.CTkLabel(master=self.entry_frame, text="First")
         self.first_name_label.grid(row=2, column=0, padx=20, pady=10, sticky="nsew")
 
-        self.last_name_label = customtkinter.CTkLabel(master=self.tab("Main"), text="last")
+        self.last_name_label = customtkinter.CTkLabel(master=self.entry_frame, text="last")
         self.last_name_label.grid(row=2, column=1, padx=20, pady=10, sticky="nsew")
 
-        self.phone_number_label = customtkinter.CTkLabel(master=self.tab("Main"), text="(111)111-1111")
+        self.phone_number_label = customtkinter.CTkLabel(master=self.entry_frame, text="(111)111-1111")
         self.phone_number_label.grid(row=3, column=0, padx=20, pady=10, sticky="nsew")
         
-        self.address_label = customtkinter.CTkLabel(master=self.tab("Main"), text="address")
+        self.address_label = customtkinter.CTkLabel(master=self.entry_frame, text="address")
         self.address_label.grid(row=4, column=0, padx=20, pady=10, sticky="nsew")
 
-        self.county_label = customtkinter.CTkLabel(master=self.tab("Main"), text="county")
+        self.county_label = customtkinter.CTkLabel(master=self.entry_frame, text="county")
         self.county_label.grid(row=4, column=1, padx=20, pady=10, sticky="nsew")
 
-        self.zipcode_label = customtkinter.CTkLabel(master=self.tab("Main"), text="zipcode")
+        self.zipcode_label = customtkinter.CTkLabel(master=self.entry_frame, text="zipcode")
         self.zipcode_label.grid(row=4, column=2, padx=20, pady=10, sticky="nsew")
 
-        self.state_label = customtkinter.CTkLabel(master=self.tab("Main"), text="State")
+        self.state_label = customtkinter.CTkLabel(master=self.entry_frame, text="State")
         self.state_label.grid(row=4, column=3, padx=20, pady=10, sticky="nsew")
 
-        self.invoice_number_label = customtkinter.CTkLabel(master=self.tab("Main"), text="Invoice number")
+        self.invoice_number_label = customtkinter.CTkLabel(master=self.entry_frame, text="Invoice number")
         self.invoice_number_label.grid(row=3, column=4, padx=20, pady=10, sticky="nsew")
 
-        self.invoice_date_label = customtkinter.CTkLabel(master=self.tab("Main"), text="Invoice Date")
+        self.invoice_date_label = customtkinter.CTkLabel(master=self.entry_frame, text="Invoice Date")
         self.invoice_date_label.grid(row=4, column=4, padx=20, pady=10, sticky="nsew")
         
-        self.invoice_number_entry = customtkinter.CTkEntry(master=self.tab("Main"), placeholder_text="invoice number")
+        self.invoice_number_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="invoice number")
         self.invoice_number_entry.grid(row=3, column=5, padx=20, pady=10, sticky="nsew")
 
-        self.invoice_date_entry = customtkinter.CTkEntry(master=self.tab("Main"), placeholder_text="Date")
+        self.invoice_date_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="Date")
         self.invoice_date_entry.grid(row=4, column=5, padx=20, pady=10, sticky="nsew")
 
-        self.invoice_due_date_entry = customtkinter.CTkEntry(master=self.tab("Main"), placeholder_text="Due Date")
+        self.invoice_due_date_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="Due Date")
         self.invoice_due_date_entry.grid(row=5, column=5, padx=20, pady=10, sticky="nsew")
 
-        self.invoice_due_date_label = customtkinter.CTkLabel(master=self.tab("Main"), text="Due Date")
+        self.invoice_due_date_label = customtkinter.CTkLabel(master=self.entry_frame, text="Due Date")
         self.invoice_due_date_label.grid(row=5, column=4, padx=20, pady=10, sticky="nsew")
 
 
 
-        self.customer_name_entry = customtkinter.CTkEntry(master=self.tab("Main"), placeholder_text="Customer Name")
+        self.customer_name_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="Customer Name")
         self.customer_name_entry.grid(row=5, column=0, padx=20, pady=10, sticky="nsew")
 
-        self.customer_address_entry = customtkinter.CTkEntry(master=self.tab("Main"), placeholder_text="Customer Address")
+        self.customer_address_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="Customer Address")
         self.customer_address_entry.grid(row=6, column=0, padx=20, pady=10, sticky="nsew")
 
-        self.customer_zipcode_entry = customtkinter.CTkEntry(master=self.tab("Main"), placeholder_text="Customer Zipcode")
+        self.customer_zipcode_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="Customer Zipcode")
         self.customer_zipcode_entry.grid(row=6, column=1, padx=20, pady=10, sticky="nsew")
 
-        self.customer_state_entry = customtkinter.CTkEntry(master=self.tab("Main"), placeholder_text="Customer State")
+        self.customer_state_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="Customer State")
         self.customer_state_entry.grid(row=6, column=2, padx=20, pady=10, sticky="nsew")
 
 
 
         # Scroll Frame for services
-        self.scroll_frame = customtkinter.CTkScrollableFrame(master=self.tab("Main"), width=600, height=300)
-        self.scroll_frame.grid(row=7, column=1, columnspan=3, padx=20, pady=10, sticky="nsew")
+        self.scroll_frame = customtkinter.CTkScrollableFrame(master=self.tab("Main"), width=600, height=300, fg_color="gray", border_color="white")
+        self.scroll_frame.grid(row=1, column=0, padx=10, pady=(10, 0), sticky="nsew")
 
         # Column headers
         self.service_label = customtkinter.CTkLabel(master=self.scroll_frame, text="Service", font=("Arial", 14, "bold"))
@@ -110,15 +111,14 @@ class MyTabView(customtkinter.CTkTabview):
         self.add_row_button = customtkinter.CTkButton(master=self.scroll_frame, text="+", width=50, command=self.add_new_row)
         self.add_row_button.grid(row=0, column=3, padx=20, pady=10, sticky="nsew")
 
-        self.create_invoice_button = customtkinter.CTkButton(master=self.tab("Main"), text="Create Invoice", width=50, command="")
-        self.create_invoice_button.grid(row=6, column=4, padx=20, pady=10, sticky="nsew")
+        self.create_invoice_button = customtkinter.CTkButton(master=self.entry_frame, text="Create Invoice", width=50, command="")
+        self.create_invoice_button.grid(row=6, column=5, padx=20, pady=10, sticky="nsew")
 
 
         # Track current row index for entries
         self.current_row_index = 1
 
     def add_new_row(self):
-        """Add a new row of entry widgets under the column headers."""
         service_entry = customtkinter.CTkEntry(master=self.scroll_frame, placeholder_text="Service")
         service_entry.grid(row=self.current_row_index, column=0, padx=10, pady=5, sticky="nsew")
 
@@ -130,6 +130,12 @@ class MyTabView(customtkinter.CTkTabview):
 
         # Increment the row index
         self.current_row_index += 1
+
+    def create_invoice(self):
+        # This is where customer information will be pulled from the main screen
+        # Add the ability to name the file?
+        # Figure out how to handle file names
+        pass
 
 
 
@@ -158,7 +164,7 @@ class MyTabView(customtkinter.CTkTabview):
         self.save_button.grid(row=10, column=0, padx=20, pady=10, sticky="nsew")
 
     def initialize_folder_tab(self):
-        pass  # This tab can be populated later as needed
+        pass  # This tab is empty currently
 
     def create_entry(self, parent, placeholder, row):
         entry = customtkinter.CTkEntry(master=parent, placeholder_text=placeholder)
@@ -223,8 +229,7 @@ class MyTabView(customtkinter.CTkTabview):
             self.address_label.configure(text=data.get("address", "Address"))
             self.zipcode_label.configure(text=data.get("zipcode", "Zipcode"))
             self.state_label.configure(text=data.get("state", "State"))
-                
-
+            
 
             if self.image_path:
                 self.image_label.configure(text=f"Image Selected: {os.path.basename(self.image_path)}")
@@ -234,11 +239,12 @@ class MyTabView(customtkinter.CTkTabview):
 class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
-        self.geometry("1280x720")
+        #self.geometry("1280x720")
 
         # Configure grid to allow expansion
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
+        self.title("Invoice Application")
 
         # Add TabView
         self.tab_view = MyTabView(master=self)
