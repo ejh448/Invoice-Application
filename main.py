@@ -2,6 +2,9 @@ import customtkinter
 from tkinter import filedialog
 import os
 import json
+from invoiceGenerator import generate_invoice
+
+
 
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("dark-blue")
@@ -143,6 +146,7 @@ class MyTabView(customtkinter.CTkTabview):
     def create_invoice(self):
         self.save_customer_data()
         self.save_invoice_data()
+        generate_invoice()
         # This is where customer information will be pulled from the main screen
         # Add the ability to name the file?
         # Figure out how to handle file names
