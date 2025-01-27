@@ -35,6 +35,10 @@ def generate_invoice():
     invoice_number = data["invoice_number"]
     invoice_date = data["invoice_date"]
     invoice_due_date = data["invoice_due_date"]
+    
+    with open("service_data.json", "r") as file:
+        services = json.load(file)
+    
 
     # Create PDF folder and file
     pdf_folder = "Invoices"
@@ -108,26 +112,20 @@ def generate_invoice():
     # Items Table
     c.setFont("Helvetica-Bold", 12)
     c.setFillColor("Blue")
-    c.drawString(margin, current_y, "Description")
-    c.drawString(margin + 200, current_y, "Item")
-    c.drawString(page_width - 150, current_y, "Price")
+    c.drawString(margin, current_y, "Service")
+    c.drawString(margin + 175, current_y, "Description")
+    c.drawString(page_width - 110, current_y, "Price")
     c.setFillColor("Black")
     c.setFont("Helvetica", 12)
     current_y -= 20  # Line spacing for items
 
-    # Draw items dynamically
-    items = [
-        {"Description": "Item 1", "Item": "bolts", "Price": "$100.00"},
-        {"Description": "Item 1", "Item": "lumber", "Price": "$100.00"},
-        {"Description": "Item 1", "Item": "shingles", "Price": "$100.00"},
-        {"Description": "Item 1", "Item": "etc..", "Price": "$100.00"}
-    ]
-
-    for item in items:
-        c.drawString(margin, current_y, item["Description"])
-        c.drawString(margin + 200, current_y, item["Item"])
-        c.drawString(page_width - 150, current_y, item["Price"])
-        current_y -= 20  # Spacing between items
+  
+    for i, service in enumerate(services):
+         # Move down to the next row
+        c.drawString(margin + 5, current_y, service['service'])
+        c.drawString(margin + 180, current_y, service['description'])
+        c.drawString(page_width - 100, current_y, service['price'])
+        current_y -= 20 
 
     # Draw total and other info
     c.line(margin, current_y, page_width - margin, current_y)
@@ -140,3 +138,5 @@ def generate_invoice():
     # Save PDF
     c.save()
     print(f"PDF saved successfully at: {pdf_path}")
+
+generate_invoice()
