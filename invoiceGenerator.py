@@ -2,7 +2,7 @@ from reportlab.pdfgen import canvas
 import os
 import json
 
-def generate_invoice():
+def generate_invoice(file_path):
     # Load JSON data
     with open("company_data.json", "r") as file:
         data = json.load(file)
@@ -47,7 +47,7 @@ def generate_invoice():
     pdf_path = os.path.join(pdf_folder, pdf_file_name)
 
     # Create canvas ######################################################
-    c = canvas.Canvas(pdf_path, pagesize=(595.27, 841.89))
+    c = canvas.Canvas(file_path, pagesize=(595.27, 841.89))
     page_width, page_height = c._pagesize
 
     # Set starting position
@@ -138,4 +138,4 @@ def generate_invoice():
 
     # Save PDF
     c.save()
-    print(f"PDF saved successfully at: {pdf_path}")
+    print(f"PDF saved successfully at: {file_path}")
