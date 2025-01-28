@@ -1,5 +1,6 @@
 import customtkinter
-from tkinter import filedialog
+from tkinter import filedialog, messagebox
+import tkinter
 import os
 import json
 from invoiceGenerator import generate_invoice
@@ -8,7 +9,6 @@ from invoiceGenerator import generate_invoice
 
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("dark-blue")
-
 
 class MyTabView(customtkinter.CTkTabview):
     
@@ -22,24 +22,24 @@ class MyTabView(customtkinter.CTkTabview):
         # Creating Tabs
         self.add("Main")
         self.add("Settings")
-        self.add("Folder")
+        self.configure(fg_color="#121212")
 
         self.image_path = None
 
         # Initialize widgets
         self.initialize_main_tab()
         self.initialize_settings_tab()
-        self.initialize_folder_tab()
-
-        self.load_company_data()
+        self.load_company_main()
+        
 
     def initialize_main_tab(self):
+        
         self.label = customtkinter.CTkLabel(master=self.tab("Main"), text="Invoice")
         self.label.grid(row=0, column=0, padx=20, pady=10, sticky="nsew")
 
-        # May need to remove later
-        self.entry_frame = customtkinter.CTkFrame(self.tab("Main"), fg_color="gray")
+        self.entry_frame = customtkinter.CTkFrame(self.tab("Main"), fg_color="#212121")
         self.entry_frame.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="nsew")
+
         self.company_name_label = customtkinter.CTkLabel(master=self.entry_frame, text="Company Label")
         self.company_name_label.grid(row=0, column=0, padx=20, pady=10, sticky="nsew")
 
@@ -52,65 +52,63 @@ class MyTabView(customtkinter.CTkTabview):
         self.address_label = customtkinter.CTkLabel(master=self.entry_frame, text="address")
         self.address_label.grid(row=3, column=0, padx=20, pady=10, sticky="nsew")
         
-        self.invoice_number_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="invoice number")
+        self.invoice_number_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="invoice number", fg_color="#212121")
         self.invoice_number_entry.grid(row=2, column=2, padx=20, pady=10, sticky="nsew")
 
-        self.invoice_date_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="Invoice Date")
+        self.invoice_date_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="Invoice Date", fg_color="#212121")
         self.invoice_date_entry.grid(row=1, column=2, padx=20, pady=10, sticky="nsew")
 
-        self.invoice_due_date_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="Due Date")
+        self.invoice_due_date_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="Due Date", fg_color="#212121")
         self.invoice_due_date_entry.grid(row=3, column=2, padx=20, pady=10, sticky="nsew")
 
-        self.customer_name_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="Customer Name")
+        self.customer_name_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="Customer Name", fg_color="#212121")
         self.customer_name_entry.grid(row=0, column=1, padx=20, pady=10, sticky="nsew")
 
-        self.customer_address_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="Customer Address")
+        self.customer_address_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="Customer Address", fg_color="#212121")
         self.customer_address_entry.grid(row=1, column=1, padx=20, pady=10, sticky="nsew")
 
-        self.customer_county_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="Customer County")
+        self.customer_county_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="Customer County", fg_color="#212121")
         self.customer_county_entry.grid(row=2, column=1, padx=20, pady=10, sticky="nsew")
 
-        self.customer_zipcode_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="Customer Zipcode")
+        self.customer_zipcode_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="Customer Zipcode", fg_color="#212121")
         self.customer_zipcode_entry.grid(row=3, column=1, padx=20, pady=10, sticky="nsew")
 
-        self.customer_state_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="Customer State")
+        self.customer_state_entry = customtkinter.CTkEntry(master=self.entry_frame, placeholder_text="Customer State", fg_color="#212121")
         self.customer_state_entry.grid(row=0, column=2, padx=20, pady=10, sticky="nsew")
 
-
-
         # Scroll Frame for services
-        self.scroll_frame = customtkinter.CTkScrollableFrame(master=self.tab("Main"), width=600, height=300, fg_color="gray", border_color="white")
+        self.scroll_frame = customtkinter.CTkScrollableFrame(master=self.tab("Main"), width=600, height=300, fg_color="#212121", border_color="white")
         self.scroll_frame.grid(row=1, column=0, padx=10, pady=(10, 0), sticky="nsew")
 
         # Column headers
         self.service_label = customtkinter.CTkLabel(master=self.scroll_frame, text="Service", font=("Arial", 14, "bold"))
-        self.service_label.grid(row=0, column=0, padx=50, pady=5)
+        self.service_label.grid(row=0, column=0, padx=20, pady=5)
 
         self.description_label = customtkinter.CTkLabel(master=self.scroll_frame, text="Description", font=("Arial", 14, "bold"))
-        self.description_label.grid(row=0, column=1, padx=50, pady=5)
+        self.description_label.grid(row=0, column=1, padx=20, pady=5)
 
         self.price_label = customtkinter.CTkLabel(master=self.scroll_frame, text="Price", font=("Arial", 14, "bold"))
-        self.price_label.grid(row=0, column=2, padx=50, pady=5)
+        self.price_label.grid(row=0, column=2, padx=20, pady=5)
 
         # Add button
-        self.add_row_button = customtkinter.CTkButton(master=self.scroll_frame, text="+", width=100, command=self.add_new_row)
-        self.add_row_button.grid(row=0, column=3, padx=50, pady=10, sticky="nsew")
+        self.add_row_button = customtkinter.CTkButton(master=self.scroll_frame, text="+", width=100, command=self.add_new_row, fg_color="#3700B3")
+        self.add_row_button.grid(row=0, column=3, padx=20, pady=10, sticky="nsew")
 
-        self.create_invoice_button = customtkinter.CTkButton(master=self.tab("Main"), text="Create Invoice", width=50, command=self.create_invoice)
-        self.create_invoice_button.grid(row=2, column=0, padx=20, pady=10, sticky="nsew")
+        self.create_invoice_button = customtkinter.CTkButton(master=self.tab("Main"), text="Create Invoice", width=50, command=self.create_invoice, fg_color="#3700B3")
+        self.create_invoice_button.grid(row=2, column=0, padx=50, pady=10, sticky="nsew")
 
         # Track current row index for entries
         self.current_row_index = 1
 
     def add_new_row(self):
         # Create new entries for service, description, and price
-        service_entry = customtkinter.CTkEntry(master=self.scroll_frame, placeholder_text="Service")
+        service_entry = customtkinter.CTkEntry(master=self.scroll_frame, placeholder_text="Service", fg_color="#212121")
         service_entry.grid(row=self.current_row_index, column=0, padx=10, pady=5, sticky="nsew")
 
-        description_entry = customtkinter.CTkEntry(master=self.scroll_frame, placeholder_text="Description")
+        description_entry = customtkinter.CTkEntry(master=self.scroll_frame, placeholder_text="Description", fg_color="#212121")
         description_entry.grid(row=self.current_row_index, column=1, padx=10, pady=5, sticky="nsew")
 
-        price_entry = customtkinter.CTkEntry(master=self.scroll_frame, placeholder_text="Price")
+        price_entry = customtkinter.CTkEntry(master=self.scroll_frame, placeholder_text="Price", fg_color="#212121")
         price_entry.grid(row=self.current_row_index, column=2, padx=10, pady=5, sticky="nsew")
 
         number_label = customtkinter.CTkLabel(master=self.scroll_frame, text=str(self.current_row_index))
@@ -125,12 +123,13 @@ class MyTabView(customtkinter.CTkTabview):
         self.save_customer_data()
         self.save_invoice_data()
         self.save_service_data()
-        generate_invoice()
-        # This is where customer information will be pulled from the main screen
-        # Add the ability to name the file?
-        # Figure out how to handle file names
-        # also have a popup for file name
-        pass
+        self.get_file_save_path()
+    
+    def get_file_save_path(self):
+        file_path = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF Files", "*.pdf")])
+        generate_invoice(file_path)
+        messagebox.showinfo("Invoice Created", "Your invoice has been successfully created!")
+        return file_path
 
     def save_service_data(self):
         # Collect all row data
@@ -151,7 +150,8 @@ class MyTabView(customtkinter.CTkTabview):
         # Save to JSON file
         with open("service_data.json", "w") as file:
             json.dump(rows, file, indent=4)
-
+        
+        
         print("Success", "Service data saved successfully.")
 
 
@@ -166,12 +166,12 @@ class MyTabView(customtkinter.CTkTabview):
 
         if not all(value for key, value in data.items()):
             print("Error", "Customer All fields must be filled out.")
+            messagebox.showinfo("Error", "All Customer Fields Must Be Populated!")
             return
 
         # Save to JSON file
         with open(self.CUSTOMER_DATA_FILE, "w") as file:
             json.dump(data, file)
-
         print("Success", "Data saved successfully.")
     
     def save_invoice_data(self):
@@ -182,13 +182,14 @@ class MyTabView(customtkinter.CTkTabview):
         }
 
         if not all(value for key, value in data.items()):
+            messagebox.showinfo("Error", "All Invoice Fields must be filled out!")
             print("Error", "Invoice fields must be filled out.")
             return
 
         # Save to JSON file
         with open(self.INVOICE_DATA_FILE, "w") as file:
             json.dump(data, file)
-
+        
         print("Success", "Data saved successfully.")
 
     def initialize_settings_tab(self):
@@ -229,15 +230,13 @@ class MyTabView(customtkinter.CTkTabview):
         # Image selection widgets
         self.image_label = customtkinter.CTkLabel(master=self.tab("Settings"), text="No Image Selected")
         self.image_label.grid(row=4, column=1, padx=20, pady=10, sticky="nsew")
-        self.pick_image_button = customtkinter.CTkButton(master=self.tab("Settings"), text="Select Image", command=self.select_image)
+        self.pick_image_button = customtkinter.CTkButton(master=self.tab("Settings"), text="Select Image", command=self.select_image, fg_color="#3700B3")
         self.pick_image_button.grid(row=5, column=1, padx=20, pady=10, sticky="nsew")
 
         # Save button
-        self.save_button = customtkinter.CTkButton(master=self.tab("Settings"), text="Save", command=self.save_company_data)
+        self.save_button = customtkinter.CTkButton(master=self.tab("Settings"), text="Save", command=self.save_company_data, fg_color="#3700B3")
         self.save_button.grid(row=6, column=1, padx=20, pady=10, sticky="nsew")
-
-    def initialize_folder_tab(self):
-        pass  # This tab is empty currently
+        self.load_company_data()
 
     def create_entry(self, parent, placeholder, row):
         entry = customtkinter.CTkEntry(master=parent, placeholder_text=placeholder)
@@ -245,7 +244,6 @@ class MyTabView(customtkinter.CTkTabview):
         return entry
 
     def select_image(self):
-        # Open file dialog to select image
         filetypes = [("Image files", "*.png *.jpg *.jpeg *.bmp"), ("All files", "*.*")]
         filepath = filedialog.askopenfilename(title="Select Image", filetypes=filetypes)
 
@@ -270,13 +268,14 @@ class MyTabView(customtkinter.CTkTabview):
 
         # Ensure all required fields are filled
         if not all(value for key, value in data.items() if key != "image_path"):
+            messagebox.showinfo("Error", "All Company Fields must be filled out!")
             print("Error", "Company fields except the image must be filled out.")
             return
 
         # Save to JSON file
         with open(self.DATA_FILE, "w") as file:
             json.dump(data, file)
-
+        
         print("Success", "Data saved successfully.")
     
 
@@ -294,16 +293,22 @@ class MyTabView(customtkinter.CTkTabview):
             self.image_path = data.get("image_path", None)
             self.email_entry.insert(0, data.get("email",""))
             self.website_entry.insert(0, data.get("website",""))
-
-
-            # maintab
-            self.company_name_label.configure(text=data.get("company_name", "Company Label"))
-            self.name_label.configure(text = f"{data.get('first_name', 'First')} {data.get('last_name', 'Last')}")
-            self.phone_number_label.configure(text=data.get("phone_number", "(111)111-1111"))
-            self.address_label.configure(text= f"{data.get('address', 'Address')} {data.get('county', 'County')} {data.get('state', 'State')}, {data.get('zipcode', 'Zipcode')} ")
+            self.county_entry.insert(0, data.get("county",""))
+            self.zipcode_entry.insert(0, data.get("zipcode", ""))
+            self.state_entry.insert(0, data.get("state", ""))
 
             if self.image_path:
                 self.image_label.configure(text=f"Image Selected: {os.path.basename(self.image_path)}")
+    
+    def load_company_main(self):
+        if os.path.exists(self.DATA_FILE):
+            with open(self.DATA_FILE, "r") as file:
+                data = json.load(file)
+                # maintab
+                self.company_name_label.configure(text=data.get("company_name", "Company Label"))
+                self.name_label.configure(text = f"{data.get('first_name', 'First')} {data.get('last_name', 'Last')}")
+                self.phone_number_label.configure(text=data.get("phone_number", "(111)111-1111"))
+                self.address_label.configure(text= f"{data.get('address', 'Address')} {data.get('county', 'County')} {data.get('state', 'State')}, {data.get('zipcode', 'Zipcode')} ")
 
 
 # The main application frame
@@ -314,6 +319,7 @@ class App(customtkinter.CTk):
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
         self.title("Invoice Application")
+        self.configure(fg_color="#121212")
 
         self.tab_view = MyTabView(master=self)
         self.tab_view.grid(row=0, column=0, padx=20, pady=40, sticky="nsew")
