@@ -60,7 +60,7 @@ def generate_invoice():
     c.drawString(margin, current_y, "INVOICE")
     # Draw the company logo/image
     if os.path.exists(image_path):
-        image_width = 150  # Set the desired width
+        image_width = 200  # Set the desired width
         image_height = 100  # Set the desired height
         c.drawImage(image_path, page_width - image_width - margin, current_y + 10 - image_height, 
                     width=image_width, height=image_height)
@@ -119,24 +119,23 @@ def generate_invoice():
     c.setFont("Helvetica", 12)
     current_y -= 20  # Line spacing for items
 
-  
+    totalprice = 0
     for i, service in enumerate(services):
-         # Move down to the next row
+        # Move down to the next row
         c.drawString(margin + 5, current_y, service['service'])
         c.drawString(margin + 180, current_y, service['description'])
-        c.drawString(page_width - 100, current_y, service['price'])
+        c.drawString(page_width - 100, current_y, f"${float(service['price'])}")
+        totalprice += float(service['price'])
         current_y -= 20 
 
     # Draw total and other info
     c.line(margin, current_y, page_width - margin, current_y)
     current_y -= 20
     c.setFont("Helvetica-Bold", 12)
-    c.drawString(page_width - 150, current_y, "Total: $250.00")
+    c.drawString(page_width - 150, current_y, f"Total: ${totalprice}")
     c.setFillColor("Red")
     c.drawString(margin, current_y, f"Due Date: {invoice_due_date}")
 
     # Save PDF
     c.save()
     print(f"PDF saved successfully at: {pdf_path}")
-
-generate_invoice()
